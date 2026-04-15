@@ -3,12 +3,12 @@ import json
 from config import Config
 
 class AIHandler:
-    """مدیریت تعامل با services هوش مصنوعی (رایگان و paid)"""
+    """مدیریت تعامل با services هوش مصنوعی رایگان"""
     
     def __init__(self):
         self.google_key = Config.GOOGLE_API_KEY
         self.huggingface_key = Config.HUGGINGFACE_API_KEY
-        self.openai_key = Config.OPENAI_API_KEY
+        self.deepseek_key = Config.DEEPSEEK_API_KEY
     
     async def get_response(self, user_message: str, use_service: str = 'google') -> str:
         """
@@ -16,7 +16,7 @@ class AIHandler:
         
         Args:
             user_message: پیام کاربر
-            use_service: سرویس مورد نظر ('google', 'huggingface', یا 'openai')
+            use_service: سرویس مورد نظر ('google', 'huggingface' یا 'deepseek')
         
         Returns:
             پاسخ هوش مصنوعی
@@ -26,8 +26,8 @@ class AIHandler:
                 return await self._get_google_response(user_message)
             elif use_service.lower() == 'huggingface':
                 return await self._get_huggingface_response(user_message)
-            elif use_service.lower() == 'openai':
-                return await self._get_openai_response(user_message)
+            elif use_service.lower() == 'deepseek':
+                return await self._get_deepseek_response(user_message)
             else:
                 return "سرویس نامشخص"
         except Exception as e:
@@ -67,29 +67,35 @@ class AIHandler:
         except Exception as e:
             return f"خطا در Hugging Face API: {str(e)}"
     
-    async def _get_openai_response(self, user_message: str) -> str:
-        """استفاده از OpenAI ChatGPT API (Paid)"""
+    async def _get_deepseek_response(self, user_message: str) -> str:
+        """استفاده از DeepSeek API (رایگان)"""
         try:
-            from openai import OpenAI
-            
-            if not self.openai_key:
-                return "❌ OpenAI API key تنظیم نشده است\n💡 لطفاً OPENAI_API_KEY را در .env اضافه کنید"
-            
-            client = OpenAI(api_key=self.openai_key)
-            
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",  # یا "gpt-4" برای مدل بهتر
-                messages=[
-                    {"role": "system", "content": "تو یک دستیار هوشمند و مفید هستی"},
-                    {"role": "user", "content": user_message}
+            api_url = "https://api.deepseek.com/chat/completions"
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.deepseek_key}"
+            }
+            payload = {
+                "model": "deepseek-chat",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": user_message
+                    }
                 ],
-                max_tokens=500,
-                temperature=0.7
-            )
+                "temperature": 0.7,
+                "max_tokens": 1000
+            }
             
-            return response.choices[0].message.content
-        
-        except ImportError:
-            return "❌ کتابخانه openai نصب نشده است\n💡 اجرا کنید: pip install openai"
+            response = requests.post(api_url, headers=headers, json=payload, timeout=30)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if "choices" in result and len(result["choices"]) > 0:
+                    return result["choices"][0]["message"]["content"]
+                else:
+                    return "پاسخی دریافت نشد"
+            else:
+                return f"خطا از سرور DeepSeek: {response.status_code}"
         except Exception as e:
-            return f"❌ خطا در OpenAI API: {str(e)}"
+            return f"خطا در DeepSeek API: {str(e)}"

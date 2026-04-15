@@ -3,6 +3,7 @@
 ## 🎉 What's New
 
 ### 1. ⏰ Keep-Alive Webhook Support
+
 **Problem**: Render suspends free services after 15 minutes of inactivity
 **Solution**: Added `/ping` endpoint that can be called by monitoring services
 
@@ -15,16 +16,19 @@ def ping():
 ```
 
 **How to use:**
+
 - Set up UptimeRobot to ping `/ping` every 10 minutes
 - Bot will never sleep! ✅
 - [📖 Full Guide](KEEP_ALIVE.md)
 
 ### 2. 🌐 English README
+
 - Complete README rewritten in English
 - Easy to understand for international developers
 - Better documentation structure
 
 ### 3. 📚 Complete Setup Guides
+
 - [README.md](README.md) - New English version
 - [setup_guide.md](setup_guide.md) - Updated with keep-alive
 - [KEEP_ALIVE.md](KEEP_ALIVE.md) - Dedicated guide for Render suspension
@@ -35,6 +39,7 @@ def ping():
 ## 🚀 Key Features
 
 ### Keep-Alive System
+
 ```
 Configuration: UptimeRobot → /ping endpoint (10 min interval)
 Result: Bot stays online 24/7
@@ -44,6 +49,7 @@ After:  ✅ Bot always online
 ```
 
 ### Endpoints
+
 - `/webhook` - Receive messages from Bale
 - `/health` - Check bot status
 - `/ping` - Keep-alive endpoint ⏰
@@ -65,18 +71,21 @@ After:  ✅ Bot always online
 ## 🔧 How to Enable Keep-Alive
 
 ### Step 1: Deploy to Render
+
 ```bash
 git push origin main
 # Deploy on https://render.com
 ```
 
 ### Step 2: Set Up UptimeRobot
+
 1. Go to https://uptimerobot.com
 2. Create HTTP monitor
 3. URL: `https://your-app.onrender.com/ping`
 4. Interval: 10 minutes
 
 ### Step 3: Test
+
 ```bash
 curl https://your-app.onrender.com/ping
 # Response: {"status": "alive", "timestamp": "..."}
@@ -105,17 +114,20 @@ curl https://your-app.onrender.com/ping
 ## 🎯 Current Status
 
 ✅ Bot Core Features
+
 - Multi-language support
 - Admin system with granular control
 - Free AI integration (Google + HuggingFace)
 - Bale integration
 
 ✅ Deployment Ready
+
 - Ready for Render
 - Environment variable management
 - Keep-alive support to prevent suspension
 
 ✅ Documentation
+
 - Setup guides (Persian)
 - API reference
 - English README

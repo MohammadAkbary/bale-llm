@@ -1,6 +1,7 @@
 # راهنمای راه‌اندازی ربات Bale LLM
 
 ## نیازمندی‌ها
+
 - Python 3.8+
 - حساب Bale Bot
 - کلید API برای یکی از سرویس‌های AI رایگان
@@ -8,12 +9,14 @@
 ## مراحل راه‌اندازی محلی
 
 ### 1. Clone کردن پروژه
+
 ```bash
 git clone https://github.com/yourusername/bale-llm.git
 cd bale-llm
 ```
 
 ### 2. ایجاد Virtual Environment
+
 ```bash
 # Windows
 python -m venv venv
@@ -25,11 +28,13 @@ source venv/bin/activate
 ```
 
 ### 3. نصب وابستگی‌ها
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. تنظیم متغیرهای محیطی
+
 ```bash
 # کپی کردن فایل نمونه
 cp .env.example .env
@@ -40,25 +45,30 @@ cp .env.example .env
 ### 5. اطلاعات مورد نیاز برای .env
 
 #### برای Bale Bot:
+
 1. به [@BaleBot](https://t.me/balebot) یا سایت رسمی بله مراجعه کنید
 2. یک ربات جدید بسازید و توکن را کپی کنید
 
 #### برای Google Gemini (رایگان):
+
 1. به https://ai.google.dev بروید
 2. دکمه "Get API Key" را کلیک کنید
 3. کلید API را کپی کنید
 
 #### برای Hugging Face (رایگان):
+
 1. به https://huggingface.co بروید
 2. ثبت‌نام کنید یا وارد شوید
 3. در Settings > Access Tokens کلید جدید ایجاد کنید
 
 ### 6. اجرای محلی
+
 ```bash
 python main.py
 ```
 
 ### ⚠️ مهم: تنظیم Admin اولیه
+
 ربات نیاز به یک Admin اولیه دارد. پس از اولین اجرا:
 
 ```bash
@@ -78,6 +88,7 @@ git push origin main
 ```
 
 ### 2. ایجاد سرویس روی Render
+
 1. به https://render.com بروید
 2. "New +" کلیک کنید و "Web Service" انتخاب کنید
 3. Repository خود را انتخاب کنید
@@ -88,6 +99,7 @@ git push origin main
    - **Start Command**: `gunicorn main:app`
 
 ### 3. تنظیم Environment Variables
+
 1. در Render dashboard، به سرویس خود بروید
 2. به "Environment" بروید
 3. متغیرهای زیر را اضافه کنید:
@@ -97,14 +109,17 @@ git push origin main
    - `PORT`: 8000
 
 ### 4. تنظیم Webhook
+
 1. URL سرویس Render خود (شبیه: `https://your-app.onrender.com`) را کپی کنید
 2. این URL را به عنوان Webhook در تنظیمات Bale Bot خود قرار دهید
 3. Webhook باید به `/webhook` اشاره کند: `https://your-app.onrender.com/webhook`
 
 ### 5. ⏰ تنظیم Keep-Alive (مهم!)
+
 Render سرویس‌های رایگان را بعد از 15 دقیقه inactivity suspend می‌کند.
 
 **راه‌حل**: از UptimeRobot استفاده کنید:
+
 1. به https://uptimerobot.com بروید
 2. اکاونت رایگان بسازید
 3. Add Monitor:
@@ -115,7 +130,9 @@ Render سرویس‌های رایگان را بعد از 15 دقیقه inactivit
 [📖 دستورالعمل کامل Keep-Alive](KEEP_ALIVE.md)
 
 ### 6. ایجاد Admin
+
 برای ایجاد Admin در محیط Render:
+
 ```bash
 # اگر از Shell استفاده می‌کنید (Render dashboard)
 python setup_admin.py
@@ -148,6 +165,7 @@ bale-llm/
 ## دستورات مدیر (Admin Commands)
 
 ### دستورات عمومی
+
 ```bash
 /help           # نمایش راهنما
 /start          # شروع مجدد
@@ -156,6 +174,7 @@ bale-llm/
 ```
 
 ### دستورات مدیران (Admin Only)
+
 ```bash
 /admin_list                    # نمایش لیست مدیران
 /add_admin [USER_ID]           # اضافه کردن مدیر جدید
@@ -165,6 +184,7 @@ bale-llm/
 ```
 
 ### مثال استفاده
+
 ```
 /add_admin 123456789
 /add_user 987654321
@@ -174,11 +194,14 @@ bale-llm/
 ## چند‌زبانی (Multi-Language Support)
 
 ### زبان‌های پشتیبانی‌شده
+
 - ✅ **فارسی** (Farsi/Persian) - کد: `fa`
 - ✅ **انگلیسی** (English) - کد: `en`
 
 ### تغییر زبان
+
 کاربران می‌توانند با دستور `/lang` زبان را تغییر دهند:
+
 ```bash
 /lang fa  # برای فارسی
 /lang en  # برای انگلیسی
@@ -189,12 +212,13 @@ bale-llm/
 ## سیستم تأیید و دسترسی
 
 ### سطح‌های دسترسی
-| سطح | علامت | توضیح |
-|-----|-------|-------|
-| مسدود (Blocked) | ❌ | کاربر قطعاً نمی‌تواند استفاده کند |
-| بدون دسترسی | ❌ | کاربران غریب نمی‌توانند (پیش‌فرض) |
-| کاربر مجاز | ✅ | کاربر می‌تواند از ربات استفاده کند |
-| مدیر (Admin) | 👨‍💼 | دسترسی مدیریتی کامل |
+
+| سطح             | علامت | توضیح                              |
+| --------------- | ----- | ---------------------------------- |
+| مسدود (Blocked) | ❌    | کاربر قطعاً نمی‌تواند استفاده کند  |
+| بدون دسترسی     | ❌    | کاربران غریب نمی‌توانند (پیش‌فرض)  |
+| کاربر مجاز      | ✅    | کاربر می‌تواند از ربات استفاده کند |
+| مدیر (Admin)    | 👨‍💼    | دسترسی مدیریتی کامل                |
 
 ### تنظیمات دسترسی
 
@@ -206,12 +230,15 @@ require_approval = True  # تأیید مورد نیاز است
 ```
 
 برای اجازه به کاربران جدید:
+
 ```bash
 /add_user [USER_ID]
 ```
 
 ### ریست کردن دسترسی‌ها
+
 اگر دسترسی‌ها مختل شد:
+
 1. فایل `bot_database.json` را حذف کنید
 2. `python setup_admin.py` را دوباره اجرا کنید
 3. Admin جدید را تنظیم کنید
@@ -219,11 +246,13 @@ require_approval = True  # تأیید مورد نیاز است
 ## API های رایگان موجود
 
 ### Google Gemini
+
 - **مزایا**: کیفیت خوب، تعداد درخواست‌های بیشتر
 - **محدودیت**: تقریباً 60 درخواست در دقیقه
 - **سایت**: https://ai.google.dev
 
 ### Hugging Face
+
 - **مزایا**: مدل‌های متعدد و متنوع
 - **محدودیت**: سرعت محدود در تیار رایگان
 - **سایت**: https://huggingface.co
@@ -231,14 +260,17 @@ require_approval = True  # تأیید مورد نیاز است
 ## مشکل‌زدایی
 
 ### مشکل: "BALE_BOT_TOKEN not found"
+
 - توکن را در فایل `.env` بررسی کنید
 - مطمئن شوید کپی‌پیست صحیح انجام شده
 
 ### مشکل: "API rate limit exceeded"
+
 - صبر کنید و دوباره امتحان کنید
 - مدل متفاوتی را امتحan کنید
 
 ### مشکل: "Connection timeout"
+
 - اتصال اینترنت را بررسی کنید
 - Firewall را بررسی کنید
 

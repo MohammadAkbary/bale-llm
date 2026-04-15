@@ -13,11 +13,12 @@ class Config:
     # AI Services Configuration
     GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
     HUGGINGFACE_API_KEY = os.getenv('HUGGINGFACE_API_KEY')
+    OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
     
     # Validate required configurations
     @classmethod
     def validate(cls):
         if not cls.BALE_BOT_TOKEN:
             raise ValueError("BALE_BOT_TOKEN is required")
-        if not cls.GOOGLE_API_KEY and not cls.HUGGINGFACE_API_KEY:
+        if not cls.GOOGLE_API_KEY and not cls.HUGGINGFACE_API_KEY and not cls.OPENAI_API_KEY:
             raise ValueError("At least one AI API key is required")

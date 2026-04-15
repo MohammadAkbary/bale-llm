@@ -61,6 +61,16 @@ cp .env.example .env
 2. ثبت‌نام کنید یا وارد شوید
 3. در Settings > Access Tokens کلید جدید ایجاد کنید
 
+#### برای DeepSeek (رایگان - توصیه شده!)
+
+1. به https://www.deepseek.com بروید
+2. ثبت‌نام کنید (بدون نیاز به کارت اعتباری! 🎉)
+3. به https://platform.deepseek.com/api_keys بروید
+4. دکمه "Create new API key" کلیک کنید
+5. کلید API را کپی کنید
+
+[📖 راهنمای کامل DeepSeek](DEEPSEEK_SETUP.md)
+
 ### 6. اجرای محلی
 
 ```bash

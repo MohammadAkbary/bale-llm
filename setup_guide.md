@@ -101,7 +101,20 @@ git push origin main
 2. این URL را به عنوان Webhook در تنظیمات Bale Bot خود قرار دهید
 3. Webhook باید به `/webhook` اشاره کند: `https://your-app.onrender.com/webhook`
 
-### 5. ایجاد Admin در Render
+### 5. ⏰ تنظیم Keep-Alive (مهم!)
+Render سرویس‌های رایگان را بعد از 15 دقیقه inactivity suspend می‌کند.
+
+**راه‌حل**: از UptimeRobot استفاده کنید:
+1. به https://uptimerobot.com بروید
+2. اکاونت رایگان بسازید
+3. Add Monitor:
+   - Type: HTTP(s)
+   - URL: `https://your-app.onrender.com/ping`
+   - Interval: Every 10 minutes
+
+[📖 دستورالعمل کامل Keep-Alive](KEEP_ALIVE.md)
+
+### 6. ایجاد Admin
 برای ایجاد Admin در محیط Render:
 ```bash
 # اگر از Shell استفاده می‌کنید (Render dashboard)

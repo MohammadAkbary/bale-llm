@@ -112,6 +112,7 @@ def webhook():
 def health():
     """
     بررسی سلامت برنامه
+    Keep-alive endpoint برای جلوگیری از خاموش شدن Render
     """
     try:
         bot_info = bale.get_me()
@@ -121,6 +122,17 @@ def health():
             return jsonify({"status": "unhealthy", "error": bot_info.get("error")}), 500
     except Exception as e:
         return jsonify({"status": "unhealthy", "error": str(e)}), 500
+
+
+@app.route('/ping', methods=['GET'])
+def ping():
+    """
+    Ping endpoint برای keep-alive
+    Render suspended apps بعد 15 دقیقه inactivity
+    استفاده از UptimeRobot یا service مشابه برای call این endpoint هر 10 دقیقه
+    """
+    logger.info("🔔 Ping received - Bot is alive!")
+    return jsonify({"status": "alive", "timestamp": str(__import__('datetime').datetime.now())}), 200
 
 
 @app.route('/', methods=['GET'])

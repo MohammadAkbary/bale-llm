@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: bale-llm-bot
+    env: python
+    startCommand: gunicorn main:app
+    buildCommand: pip install -r requirements.txt
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11

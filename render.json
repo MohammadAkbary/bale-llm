@@ -1,0 +1,14 @@
+# Configuration for Render deployment
+# This file helps Render understand how to deploy and run your app
+
+build:
+  builderVersion: 1
+  
+services:
+  - type: web
+    name: bale-llm-bot
+    runtime: python
+    startCommand: gunicorn main:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
